@@ -240,8 +240,10 @@ function endsWith(str, substr) {
  *   formatTime(0, 45) => "00:45"
  *   formatTime(0, 0) => "00:00"
  */
-function formatTime(/* minutes, seconds */) {
-  throw new Error('Not implemented');
+function formatTime(minutes, seconds) {
+  const formatMinutes = String(minutes).padStart(2, '0');
+  const formatSeconds = String(seconds).padStart(2, '0');
+  return `${formatMinutes}:${formatSeconds}`;
 }
 
 /**
@@ -254,9 +256,7 @@ function formatTime(/* minutes, seconds */) {
  *   reverseString('abcdef') => 'fedcba'
  *   reverseString('12345') => '54321'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
-}
+const reverseString = (str) => str.split('').reverse().join('');
 
 /**
  * Returns a string with characters in alphabetical order.
@@ -269,9 +269,7 @@ function reverseString(/* str */) {
  *   orderAlphabetically('textbook') => 'bekoottx'
  *   orderAlphabetically('abc123xyz') => '123abcxyz'
  */
-function orderAlphabetically(/* str */) {
-  throw new Error('Not implemented');
-}
+const orderAlphabetically = (str) => str.split('').sort().join('');
 
 /**
  * Checks if a given string contains a specified substring.
@@ -285,8 +283,8 @@ function orderAlphabetically(/* str */) {
  *   containsSubstring('JavaScript is Fun', 'Python') => false
  *   containsSubstring('12345', '34') => true
  */
-function containsSubstring(/* str, substring */) {
-  throw new Error('Not implemented');
+function containsSubstring(str, substring) {
+  return str.includes(substring);
 }
 
 /**
@@ -303,9 +301,10 @@ function containsSubstring(/* str, substring */) {
  *   countVowels('aEiOu') => 5
  *   countVowels('XYZ') => 1
  */
-function countVowels(/* str */) {
-  throw new Error('Not implemented');
-}
+const countVowels = (str) => {
+  if (str.length === 0) return 0;
+  return str.match(/[aeiouy]/gi) === null ? 0 : str.match(/[aeiouy]/gi).length;
+};
 
 /**
  * Returns true if the string is a palindrome; otherwise false.
@@ -320,9 +319,11 @@ function countVowels(/* str */) {
  *   isPalindrome('apple') => false
  *   isPalindrome('No lemon, no melon') => true
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
-}
+const isPalindrome = (str) => {
+  const clearStr = /[\W_]/g;
+  const lowClearStr = str.toLowerCase().replace(clearStr, '');
+  return lowClearStr.split('').reverse().join('') === lowClearStr;
+};
 
 /**
  * Find the longest word in the sentence. If there are multiple longest words,
@@ -336,9 +337,10 @@ function isPalindrome(/* str */) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
-}
+const findLongestWord = (sentence) => {
+  const sortByLength = sentence.split(' ').sort((a, b) => b.length - a.length);
+  return sortByLength[0];
+};
 
 /**
  * Returns the string where each word is reversed.
@@ -350,9 +352,11 @@ function findLongestWord(/* sentence */) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
-}
+const reverseWords = (str) =>
+  str
+    .split(' ')
+    .map((item) => item.split('').reverse().join(''))
+    .join(' ');
 
 /**
  * Inverts the case of each character in the given string.
@@ -365,8 +369,15 @@ function reverseWords(/* str */) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  return str
+    .split('')
+    .map((letter) =>
+      letter === letter.toUpperCase()
+        ? letter.toLowerCase()
+        : letter.toUpperCase()
+    )
+    .join('');
 }
 
 /**
@@ -382,9 +393,9 @@ function invertCase(/* str */) {
  *   getStringFromTemplate('John','Doe') => 'Hello, John Doe!'
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
-}
+
+const getStringFromTemplate = (firstName, lastName) =>
+  `Hello, ${firstName} ${lastName}!`;
 
 /**
  * Extracts a name from template string 'Hello, First_Name Last_Name!'.
@@ -396,9 +407,7 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
-}
+const extractNameFromTemplate = (value) => value.slice(7, -1);
 
 /**
  * Remove the first and last angle brackets from tag string
@@ -411,9 +420,8 @@ function extractNameFromTemplate(/* value */) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
-}
+
+const unbracketTag = (str) => str.replace(/<|>/g, '');
 
 /**
  * Extracts e-mails from single string with e-mails list delimited by semicolons
@@ -430,8 +438,9 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -450,9 +459,33 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
-}
+
+const encodeToRot13 = (str) => {
+  const originalAlpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const cipher = 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM'.split(
+    ''
+  );
+  const strArr = str.split('');
+  const indexes = [];
+  strArr.map((letter) => {
+    if (letter !== '?' && letter !== '!' && letter !== ' ') {
+      indexes.push(originalAlpha.indexOf(letter));
+    } else {
+      indexes.push(letter);
+    }
+    return indexes;
+  });
+  const res = [];
+  indexes.map((counter) => {
+    if (typeof counter !== 'number') {
+      res.push(counter);
+    } else {
+      res.push(cipher[counter]);
+    }
+    return res;
+  });
+  return res.join('');
+};
 
 /**
  * Returns playid card id.
@@ -478,9 +511,64 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
-}
+
+const getCardId = (value) => {
+  const cards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return cards.indexOf(value);
+};
 
 module.exports = {
   getStringLength,
